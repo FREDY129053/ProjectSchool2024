@@ -14,6 +14,11 @@ services:
       - "5432:5432"
     networks:
       - all_network
+  frontend:
+    build: ./frontend/affiche/
+    container_name: frontend_c
+    ports: 
+      - '3000:3000'
 
   # Пример запуска зависимого контейнера
   # account: - название сервиса
