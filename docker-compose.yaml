@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 129053
+      POSTGRES_DB: project_school
+    volumes:
+      - ./dump_psh.sql:/docker-entrypoint-initdb.d/dump_psh.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - all_network
+
+  # Пример запуска зависимого контейнера
+  # account: - название сервиса
+  #   build: ./account_micriservice - из какой папки брать Dockerfile(его писать в папке с проектом)
+  #   container_name: account_service - имя контейнера
+  #   depends_on: - зависимость(не запуститься пока не запуститься БД)
+  #     - postgres
+  #   environment: - переменные среды (хз работают или нет, задвал в отдельном файле)
+  #     DB_HOST: postgres_db (localhost - сам контейнер, чтобы контейнеры общались нужно запросы делать на 0.0.0.0:port)
+  #     DB_USER: postgres
+  #     DB_PASSWORD: 129053
+  #     DB_NAME: project_school
+  #   networks: - сеть локальная контейнеров
+  #     - all_network
+  #   ports: - с Localhost:8081 будет кидать в контейнер
+  #     - "8081:8081"
+
+networks:
+  all_network:
+    driver: bridge
