@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import './styles/app.css';
+import { Header } from './layouts/header';
+import { Navbar } from './layouts/navbar';
 
 function App() {
+
+  const navbarItems = [
+    "Концерты",
+    "Театры",
+    "Детям",
+    "Стендап",
+    "Спорт",
+    "В городе",
+    "Музеи и галлереи",
+    "еще",
+    // "Кино",
+    // "Экскурсии и туры",
+    // "Вечеринки",
+    // "Впечатления",
+    // "Мастер-классы",
+    // "Обучение",
+  ]
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header/>
+      <Navbar
+        items={navbarItems}
+      />
     </div>
   );
 }

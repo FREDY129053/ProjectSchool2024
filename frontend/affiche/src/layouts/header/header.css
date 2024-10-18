@@ -1,0 +1,7 @@
+.Header {
+    background-color: aquamarine;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
