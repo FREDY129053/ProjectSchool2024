@@ -9,6 +9,7 @@ function EventCard({ eventTitle, eventImg, eventDatetime, eventLocation, eventPr
             <img
                 src={eventImg}
                 alt={""}
+                className="EventImage"
             />
             <div className={'EventPrice ' + (freeEvent ? 'Free' : '')}>
                 <b>{freeEvent ? 'бесплатно' : eventPrice}</b>

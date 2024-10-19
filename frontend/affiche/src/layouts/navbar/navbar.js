@@ -5,7 +5,7 @@ import { NavbarItem } from './components/navbar-item/';
 
 function Navbar({ items }) {
     return (
-        <div className='Navbar'>
+        <div className='Navbar wrapper'>
             {items.map(itemName => (
                 <NavbarItem
                     itemName={itemName}
