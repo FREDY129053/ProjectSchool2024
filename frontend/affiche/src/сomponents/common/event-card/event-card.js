@@ -1,7 +1,7 @@
 import React from 'react';
 import './event-card.css';
 
-function EventCard({ eventId, eventTitle, eventImg, eventDatetime, eventLocation, eventPrice }) {
+function EventCard({ eventTitle, eventImg, eventDatetime, eventLocation, eventPrice }) {
     const freeEvent = (eventPrice == 0);
 
     return (

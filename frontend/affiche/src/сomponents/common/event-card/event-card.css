@@ -5,7 +5,7 @@
     height: 317px;
     display: flex;
     flex-direction: column;
-    margin: 5px;
+    margin: 20px 5px 20px 5px;
 }
 
 .EventPrice {

@@ -5,7 +5,7 @@ import { UserControls } from './components/user-controls';
 
 function Header() {
     return (
-        <div className='Header wrapper'>
+        <div className='Header '>
             <Logo/>
             <SearchBar/>
             <UserControls/>

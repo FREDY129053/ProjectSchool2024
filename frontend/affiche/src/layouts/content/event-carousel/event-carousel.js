@@ -6,7 +6,8 @@ import { ScrollingCarousel } from '@trendyol-js/react-carousel';
 
 function EventCarousel({ eventsData }) {
     return(
-        <ScrollingCarousel>
+        <ScrollingCarousel className='EventCarousel'>
+            <div className='IndentLeft'></div>
             {eventsData.map((eventData, index) => (
                 <EventCard 
                     key={index}
@@ -17,6 +18,7 @@ function EventCarousel({ eventsData }) {
                     eventPrice={eventData.price}
                 />
             ))}
+            <div className='IndentRight'></div>
         </ScrollingCarousel>
     );
 }

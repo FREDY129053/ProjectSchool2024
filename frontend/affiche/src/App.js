@@ -1,12 +1,22 @@
 import './styles/app.css';
 import { Header } from './layouts/header';
 import { Navbar } from './layouts/navbar';
-import { EventCard } from './сomponents/common/event-card'; // временно для верстки без лайаута контента
+import { Footer } from './layouts/footer';
 import { EventCarousel } from './layouts/content/event-carousel'; // временно для верстки без лайаута контента
 
 function App() {
 
-  const navbarItems = [
+  const vlruCategories = [
+    "Авто",
+    "Кино",
+    "Недвижимость",
+    "Новости",
+    "Объявления",
+    "Работа",
+    "Справочник компаний",
+  ]
+
+  const afficheCategories = [
     "Концерты",
     "Театры",
     "Детям",
@@ -14,13 +24,12 @@ function App() {
     "Спорт",
     "В городе",
     "Музеи и галлереи",
-    "Ещё",
-    // "Кино",
-    // "Экскурсии и туры",
-    // "Вечеринки",
-    // "Впечатления",
-    // "Мастер-классы",
-    // "Обучение",
+    "Кино",
+    "Экскурсии и туры",
+    "Вечеринки",
+    "Впечатления",
+    "Мастер-классы",
+    "Обучение",
   ]
 
   const eventData = {
@@ -37,10 +46,14 @@ function App() {
     <div className="App">
       <Header/>
       <Navbar
-        items={navbarItems}
+        items={afficheCategories}
       />
       <EventCarousel
         eventsData={eventsData}
+      />
+      <Footer
+        afficheCategories={afficheCategories}
+        vlruCategories={vlruCategories}
       />
     </div>
   );

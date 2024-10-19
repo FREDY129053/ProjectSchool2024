@@ -4,13 +4,20 @@ import { NavbarItem } from './components/navbar-item/';
 
 
 function Navbar({ items }) {
+    const itemsToShow = items.slice(0, items.findIndex(item => item === 'Музеи и галлереи'));
+    
     return (
-        <div className='Navbar wrapper'>
-            {items.map(itemName => (
+        <div className='Navbar'>
+            {itemsToShow.map((itemName, index) => (
                 <NavbarItem
                     itemName={itemName}
+                    key={index}
                 />
             ))}
+            <NavbarItem
+                itemName={"еще"}
+                key={itemsToShow.length}
+            />
         </div>
     );
 }
