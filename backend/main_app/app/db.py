@@ -1,6 +1,6 @@
 import psycopg2
 
-from backend.app.models import EventModel
+from app.models import EventModel
 
 
 def db_connect():
@@ -8,7 +8,10 @@ def db_connect():
         dbname="project_school",
         user="postgres",
         password="129053",
-        host="localhost")
+        host="postgres_db"
+        # host="localhost" - указывает, что сервис запущен внутри этого контейнера с Python. У нас БД вынесена в отдельный контейнер.
+        # Поэтому нужно указывать имя контейнера с БД как имя хоста, они в одной сети, так что подключится
+    )
 
     return conn
 

@@ -16,7 +16,7 @@ services:
       - all_network
 
   backend:
-    build: /backend/
+    build: ./backend/main_app
     container_name: backend
     depends_on:
       - postgres
