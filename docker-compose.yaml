@@ -15,6 +15,21 @@ services:
     networks:
       - all_network
 
+  backend:
+    build: ./backend/main_app
+    container_name: backend
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres_db
+      DB_USER: postgres
+      DB_PASSWORD: 129053
+      DB_NAME: project_school
+    networks:
+      - all_network
+    ports:
+      - "8080:8080"
+
   # Пример запуска зависимого контейнера
   # account: - название сервиса
   #   build: ./account_micriservice - из какой папки брать Dockerfile(его писать в папке с проектом)
