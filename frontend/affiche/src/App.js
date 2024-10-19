@@ -2,6 +2,7 @@ import './styles/app.css';
 import { Header } from './layouts/header';
 import { Navbar } from './layouts/navbar';
 import { EventCard } from './сomponents/common/event-card'; // временно для верстки без лайаута контента
+import { EventCarousel } from './layouts/content/event-carousel'; // временно для верстки без лайаута контента
 
 function App() {
 
@@ -30,18 +31,16 @@ function App() {
     price: "0"
   }
 
+  const eventsData = Array.from({length: 15}, () => eventData);
+
   return (
     <div className="App">
       <Header/>
       <Navbar
         items={navbarItems}
       />
-      <EventCard
-        eventImg={eventData.img}
-        eventTitle={eventData.title}
-        eventDatetime={eventData.datetime}
-        eventLocation={eventData.location}
-        eventPrice={eventData.price}
+      <EventCarousel
+        eventsData={eventsData}
       />
     </div>
   );
