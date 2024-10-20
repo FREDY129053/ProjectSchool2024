@@ -4,6 +4,7 @@ import { Navbar } from './layouts/navbar';
 import { Footer } from './layouts/footer';
 import { Content } from './layouts/content';
 import { catalogTitle, interestingTitle, recomendationsTitle } from './constants';
+
 function App() {
 
   const vlruCategories = [
