@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-image: linear-gradient(270deg, #FFFFFF 0%, #F88044 50%, #FFFFFF 100%) 1;
+    border-image: linear-gradient(270deg, #EBEBEB 0%, #F88044 50%, #EBEBEB 100%) 1;
     border-bottom: 1px solid;
 }
 
