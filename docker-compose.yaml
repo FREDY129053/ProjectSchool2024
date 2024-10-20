@@ -30,6 +30,16 @@ services:
     ports:
       - "8080:8080"
 
+  account:
+    build: ./backend/authentificate
+    container_name: account
+    depends_on:
+      - postgres
+    networks:
+      - all_network
+    ports:
+      - "8081:8081"
+
   # Пример запуска зависимого контейнера
   # account: - название сервиса
   #   build: ./account_micriservice - из какой папки брать Dockerfile(его писать в папке с проектом)
