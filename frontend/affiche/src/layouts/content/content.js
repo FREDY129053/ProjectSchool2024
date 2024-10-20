@@ -21,7 +21,7 @@ const eventsData = Array.from({length: 18}, () => eventData);
 
 const bannersData = Array.from({length: 6}, () => bannerData);
 
-function Content({ recomendationsTitle, interestingTitle, catalogTitle }) {
+function Content() {
     return (
         <>
         <EventCarousel
