@@ -1,0 +1,15 @@
+POST http://localhost:8081/api/Accounts/SignUp
+content-Type: application/json
+
+{
+  "phone": "89020602066",
+  "password": "admin"
+}
+
+POST http://localhost:8081/api/Accounts/SignIn
+content-Type: application/json
+
+{
+  "phone": "89020602066",
+  "password": "admin"
+}

@@ -1,0 +1,91 @@
+basePath: /api/Accounts
+definitions:
+  models.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  models.SignUpData:
+    properties:
+      password:
+        type: string
+      phone:
+        type: string
+    type: object
+  models.TokenResponse:
+    properties:
+      access_token:
+        type: string
+    type: object
+host: localhost:8081
+info:
+  contact: {}
+  description: Account API on Go documentation
+  title: Account service API
+  version: "1.0"
+paths:
+  /SignIn:
+    post:
+      consumes:
+      - application/json
+      description: Вход в аккаунт и установка токенов
+      parameters:
+      - description: Данные для входа
+        in: body
+        name: info
+        required: true
+        schema:
+          $ref: '#/definitions/models.SignUpData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: access_token
+          schema:
+            $ref: '#/definitions/models.TokenResponse'
+        "400":
+          description: invalid request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: cannot generate token
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Вход в аккаунт
+      tags:
+      - Users
+  /SignUp:
+    post:
+      consumes:
+      - application/json
+      description: Регистрация аккаунта и установка токенов
+      parameters:
+      - description: Данные для входа
+        in: body
+        name: info
+        required: true
+        schema:
+          $ref: '#/definitions/models.SignUpData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: access_token
+          schema:
+            $ref: '#/definitions/models.TokenResponse'
+        "400":
+          description: invalid request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: cannot create account
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Регистрация аккаунта
+      tags:
+      - Users
+swagger: "2.0"
