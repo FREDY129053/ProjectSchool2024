@@ -1,7 +1,7 @@
 import React from 'react';
 import './content.css';
 import { EventCarousel } from './event-carousel';
-import { Banners } from './banners';
+import { EventBanners } from './event-banners';
 
 const eventData = {
     img: "./assets/examples/event-image.png",
@@ -25,7 +25,7 @@ function Content({ recomendationsTitle, interestingTitle, catalogTitle }) {
         <>
         <EventCarousel
             eventsData={eventsData} />
-        <Banners
+        <EventBanners
             bannersData={bannersData} />
         </>
     );
