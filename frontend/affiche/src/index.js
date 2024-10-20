@@ -3,10 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './styles/reset.css';
 import './styles/index.css';
 import App from './app';
+import EventPage from './event-page';
+
 import reportWebVitals from './report-web-vitals';
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  
   <React.StrictMode>
     <App />
   </React.StrictMode>
