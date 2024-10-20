@@ -5,3 +5,8 @@
     justify-content: space-between;
     margin-top: 36px;
 }
+
+.NavbarCarousel {
+    position: relative;
+    left: -125px;
+}
