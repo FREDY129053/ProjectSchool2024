@@ -5,6 +5,8 @@
     justify-content: space-between;
     border-image: linear-gradient(270deg, #EBEBEB 0%, #F88044 50%, #EBEBEB 100%) 1;
     border-bottom: 1px solid;
+}.Center {
+    justify-content: center;
 }
 
 .nav-item {

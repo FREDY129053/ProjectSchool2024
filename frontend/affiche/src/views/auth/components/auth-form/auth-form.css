@@ -1,0 +1,76 @@
+.AuthForm {
+    width: 577px;
+    background-color: white;
+    padding: 45px 26px;
+    position: relative;
+    left: 50%;
+    top: 50px;
+    transform: translate(-50%, 0);
+    border-radius: 10px;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.FormToggle {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.FormToggle .Active {
+    background-color: #dddddd;
+}
+
+.ToggleButton {
+    width: 50%;
+    height: 56px;
+    border: 1px solid #dddddd;
+}
+.ToggleButton:first-child {
+    border-radius: 10px 0 0 10px;
+}
+.ToggleButton:last-child {
+    border-radius: 0 10px 10px 0;
+}
+
+.Title {
+    font-size: 22px;
+    text-align: center;
+    text-transform: none;
+}
+
+.PasswordRecovery {
+    text-align: center;
+    font-size: 14px;
+    color: #666666;
+    margin-top: 10px;
+}
+
+.DividerText {
+    text-transform: uppercase;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 50px; 
+    color: #666666;
+    margin-top: 10px;
+}
+
+.DividerText::before,
+.DividerText::after {
+    content: '';
+    flex-grow: 1;
+    height: 2px;
+    background-color: rgba(102, 102, 102, 0.25); 
+}
+
+.DividerText::before {
+    margin-right: 30px;
+}
+
+.DividerText::after {
+    margin-left: 30px; 
+}

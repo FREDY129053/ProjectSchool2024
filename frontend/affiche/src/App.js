@@ -1,62 +1,25 @@
 import './styles/app.css';
-import { Header } from './layouts/header';
-import { Navbar } from './layouts/navbar';
-import { Footer } from './layouts/footer';
-import { Content } from './layouts/content';
-import { EventPage } from './event-page';
-
+import { Main as MainView } from './views/main';
+import { Auth as AuthView } from './views/auth';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Content />
+    element: <MainView />
   },
   {
-    path: "/event",
-    element: <EventPage />
+    path: "/auth",
+    element: <AuthView />
   },
 ])
 
 function App() {
-
-  const vlruCategories = [
-    "Авто",
-    "Кино",
-    "Недвижимость",
-    "Новости",
-    "Объявления",
-    "Работа",
-    "Справочник компаний",
-  ]
-
-  const afficheCategories = [
-    "Концерты",
-    "Театры",
-    "Детям",
-    "Стендап",
-    "Спорт",
-    "В городе",
-    "Музеи и галлереи",
-    "Кино",
-    "Экскурсии и туры",
-    "Вечеринки",
-    "Впечатления",
-    "Мастер-классы",
-    "Обучение",
-  ]
-
   return (
     <div className="App">
-      <Header/>
-      <Navbar
-        items={afficheCategories}
-      />
-      <RouterProvider router={router} />
-      <Footer
-        afficheCategories={afficheCategories}
-        vlruCategories={vlruCategories}
+      <RouterProvider
+        router={router}
       />
     </div>
   );

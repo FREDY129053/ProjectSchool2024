@@ -11,7 +11,7 @@ function EventCarousel({ eventsData }) {
                 {recomendationsTitle}
             </h1>
             <ScrollingCarousel className='EventCarousel'>
-                <div className='IndentLeft'></div>
+                <div className='Indent'></div>
                 {eventsData.map((eventData, index) => (
                     <EventCard 
                         key={index}
@@ -22,7 +22,7 @@ function EventCarousel({ eventsData }) {
                         eventPrice={eventData.price}
                     />
                 ))}
-                <div className='IndentRight'></div>
+                <div className='Indent'></div>
             </ScrollingCarousel>
         </div>
     );

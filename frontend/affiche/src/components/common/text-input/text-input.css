@@ -1,0 +1,36 @@
+.TextInput {
+    padding: 10px 0;
+}
+
+.Line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: rgba(102, 102, 102, 0.8);
+}
+
+.InputLabel {
+    left: 0;
+    font-size: 14px;
+}
+
+.VisibilitySwitch {
+    right: 0;
+    font-size: 16px;
+}
+
+.InputLine {
+    width: 100%;
+    margin-top: 10px;
+    border: 1px solid rgba(102, 102, 102, 0.35);
+    border-radius: 12px;
+    font-size: 20px;
+    line-height: 40px;
+    outline: none;
+}
+
+.HideIcon {
+    height: 18px;
+    width: auto;
+    margin-right: 10px;
+}

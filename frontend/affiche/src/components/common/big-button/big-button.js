@@ -1,10 +1,18 @@
-import React from "react";
+import React from 'react';
 import './big-button.css';
 
-function BigButton({text}) {
+function BigButton({ text, icon, style }) {
     return (
-        <div className="big-button">
-            {text}
+        <div 
+            className='big-button'
+            style={style}
+        >
+            <img 
+                src={icon}
+            />
+            <div>
+                {text}
+            </div>
         </div>
     )
 }

@@ -1,11 +1,15 @@
 .big-button {
-    padding: 12px 16px 12px 16px;
+    padding: 12px 16px;
     background: #e88652;
     border-radius: 10px;
     color: #fff;
     font-weight: 700;
     font-size: 24px;
     width: 206px;
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
 }
-.big-button:hover {background: #FC9E6C;}
+.big-button:hover {background: rgb(252, 158, 108);}
