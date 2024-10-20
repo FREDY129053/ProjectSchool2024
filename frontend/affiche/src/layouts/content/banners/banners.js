@@ -1,5 +1,5 @@
 import React from 'react';
-import { Banner } from '../../../сomponents/common/banner';
+import { Banner } from '../../../components/common/banner';
 import { interestingTitle } from '../../../constants';
 import './banners.css';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import './event-carousel.css';
-import { EventCard } from '../../../сomponents/common/event-card';
+import { EventCard } from '../../../components/common/event-card';
 import { ScrollingCarousel } from '@trendyol-js/react-carousel';
 import { recomendationsTitle } from '../../../constants';
 
