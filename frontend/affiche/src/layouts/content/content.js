@@ -2,6 +2,7 @@ import React from 'react';
 import './content.css';
 import { EventCarousel } from './event-carousel';
 import { EventBanners } from './event-banners';
+import { EventCatalog } from './event-catalog';
 
 const eventData = {
     img: "./assets/examples/event-image.png",
@@ -13,10 +14,10 @@ const eventData = {
 
 const bannerData = {
     bgImg: "./assets/examples/banner-bg.png",
-    bannerTitle: "IX Международный Дальневосточный Фестиваль \"Мариинский\""
+    bannerTitle: "Вечеринка Насти Ивлеевой"
 }
 
-const eventsData = Array.from({length: 15}, () => eventData);
+const eventsData = Array.from({length: 18}, () => eventData);
 
 const bannersData = Array.from({length: 6}, () => bannerData);
 
@@ -27,6 +28,8 @@ function Content({ recomendationsTitle, interestingTitle, catalogTitle }) {
             eventsData={eventsData} />
         <EventBanners
             bannersData={bannersData} />
+        <EventCatalog
+            eventsData={eventsData} />
         </>
     );
 }

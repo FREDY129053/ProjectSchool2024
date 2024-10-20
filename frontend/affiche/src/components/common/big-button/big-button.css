@@ -1,0 +1,10 @@
+.big-button {
+    padding: 12px 16px 12px 16px;
+    background: #e88652;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 24px;
+    width: 206px;
+    text-align: center;
+}

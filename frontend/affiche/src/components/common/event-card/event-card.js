@@ -1,5 +1,6 @@
 import React from 'react';
 import './event-card.css';
+import { likeEvent  } from '../../../constants/images';
 
 function EventCard({ eventTitle, eventImg, eventDatetime, eventLocation, eventPrice }) {
     const freeEvent = (eventPrice == 0);
@@ -13,6 +14,9 @@ function EventCard({ eventTitle, eventImg, eventDatetime, eventLocation, eventPr
             />
             <div className={'EventPrice ' + (freeEvent ? 'Free' : '')}>
                 <b>{freeEvent ? 'бесплатно' : eventPrice}</b>
+            </div>
+            <div className="EventLike">
+                <img src={likeEvent} className="EventLikeImg"/>
             </div>
             <div className='EventInfo'>
                 <div className='EventTitle'>

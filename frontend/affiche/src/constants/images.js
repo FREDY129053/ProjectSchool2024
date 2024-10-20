@@ -1,5 +1,6 @@
 export const logoPath = "/assets/logo.svg";
 export const likeInactive = "/assets/like-button-inactive.svg";
+export const likeEvent = "/assets/icons/BannerFavoriteButton.svg";
 
 export const categoryIcons = [
     "/assets/icons/category-icons/icon-mic.svg",                        // "Концерты",

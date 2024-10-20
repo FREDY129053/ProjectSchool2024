@@ -32,6 +32,22 @@
     background-color: #DE3838;
 }
 
+.EventLike {
+    position: absolute;
+    border-radius: 50px;
+    background: #fff;
+    top: 8px;
+    bottom: 0;
+    left: 143px;
+    width: 32px;
+    height: 32px;
+}
+
+.EventLikeImg {
+    position: relative;
+    top: 7px;
+    left: 6px;
+}
 
 .EventInfo {
     height: 62px;
