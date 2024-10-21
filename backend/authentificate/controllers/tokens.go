@@ -6,6 +6,7 @@ import (
 	"account_service/models"
 	"net/http"
 	"time"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,6 +16,20 @@ var (
 	jwtKey = []byte("9e419115-a86a-4ebb-b619-2334d5bfe89e")
 )
 
+
+// SetAnonymousToken godoc
+// SetAnonymousToken токен для пользователя
+// @Summary Токен для пользователя
+// @Description Генерация и задание токена для каждого пользователя(случайный uuid)
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Success 200
+// @Router /enter_site [post]
+func SetAnonymousToken(c *gin.Context) {
+	c.SetCookie("anonymous_token", helpers.GenerateUUID(), int(time.Now().Add(30 * 24 * time.Hour).Unix()), "/", "localhost", false, true)
+	c.JSON(http.StatusOK, nil)
+}
 
 // SignUp godoc
 // SignUp регистрация аккаунта
@@ -27,7 +42,7 @@ var (
 // @Success 200 {object} models.TokenResponse "access_token"
 // @Failure 400 {object} models.ErrorResponse "invalid request"
 // @Failure 500 {object} models.ErrorResponse "cannot create account"
-// @Router /SignUp [post]
+// @Router /signUp [post]
 func SignUp(c *gin.Context) {
 	var inputData models.SignUpData
 
@@ -56,13 +71,29 @@ func SignUp(c *gin.Context) {
 	}
 
 	// Занос пользователя
-	_, err = databaseConn.Exec("INSERT INTO users(phone_number, password) VALUES($1, $2)", inputData.Phone, hashedPassword)
+	userUUID := helpers.GenerateUUID()
+	_, err = databaseConn.Exec("INSERT INTO users(uuid, phone_number, password) VALUES($1, $2, $3)", userUUID, inputData.Phone, hashedPassword)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "cannot create user"})
     c.Abort()
     return
 	}
 
+	// Изменение избранных(задаем избранные пользователю, если были действия)
+	cookie, err := c.Cookie("anonymous_token")
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+		c.Abort()
+		return
+	}
+	_, err = databaseConn.Exec("UPDATE favorites SET user_uuid = $1 WHERE anonym_uuid = $2", userUUID, cookie)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "cannot update favorites"})
+    c.Abort()
+    return
+	}
+
+	// Токены
 	accessToken, err := helpers.GenerateToken(inputData.Phone, helpers.AccessToken, jwtKey)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "cannot generate token"})
@@ -76,7 +107,7 @@ func SignUp(c *gin.Context) {
     return
 	}
 
-	c.SetCookie("token_refresh", refreshToken, int(time.Now().Add(24 * time.Hour).Unix()), "/", "localhost", false, true)
+	c.SetCookie("token_refresh", refreshToken, int(time.Now().Add(30 * 24 * time.Hour).Unix()), "/", "localhost", false, true)
 
 	c.JSON(http.StatusCreated, gin.H{"access_token": accessToken})
 }
@@ -94,7 +125,7 @@ func SignUp(c *gin.Context) {
 // @Failure 400 {object} models.ErrorResponse "invalid request"
 // @Failure 404 {object} models.ErrorResponse "user not found"
 // @Failure 500 {object} models.ErrorResponse "cannot generate token"
-// @Router /SignIn [post]
+// @Router /signIn [post]
 func SignIn(c *gin.Context) {
 	var inputData models.SignUpData
 
@@ -107,8 +138,8 @@ func SignIn(c *gin.Context) {
 
 	// Проверка на сущестование пользователя по номеру
 	var existingUser models.UserInfo
-	row := databaseConn.QueryRow("SELECT phone_number, password FROM users WHERE phone_number=$1", inputData.Phone)
-	if err := row.Scan(&existingUser.PhoneNumber, &existingUser.Password); err != nil {
+	row := databaseConn.QueryRow("SELECT uuid, phone_number, password FROM users WHERE phone_number=$1", inputData.Phone)
+	if err := row.Scan(&existingUser.UUID, &existingUser.PhoneNumber, &existingUser.Password); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "user not found"})
 		c.Abort()
 		return
@@ -120,6 +151,20 @@ func SignIn(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid password"})
 		c.Abort()
 		return
+	}
+
+	// Изменение избранных(задаем избранные пользователю, если были действия)
+	cookie, err := c.Cookie("anonymous_token")
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+		c.Abort()
+		return
+	}
+	_, err = databaseConn.Exec("UPDATE favorites SET user_uuid = $1 WHERE anonym_uuid = $2", existingUser.UUID, cookie)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "cannot update favorites"})
+    c.Abort()
+    return
 	}
 
 	// Генерация токенов
@@ -136,7 +181,7 @@ func SignIn(c *gin.Context) {
     return
 	}
 
-	c.SetCookie("token_refresh", refreshToken, int(time.Now().Add(24 * time.Hour).Unix()), "/", "localhost", false, true)
+	c.SetCookie("token_refresh", refreshToken, int(time.Now().Add(30 * 24 * time.Hour).Unix()), "/", "localhost", false, true)
 
 	c.JSON(http.StatusCreated, gin.H{"access_token": accessToken})
 }

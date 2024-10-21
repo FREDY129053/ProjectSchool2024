@@ -35,6 +35,7 @@ func main() {
 	accounts := router.Group("/api/Accounts")
 
 	accounts.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	accounts.POST("/SignUp", controllers.SignUp)
-	accounts.POST("/SignIn", controllers.SignIn)
+	accounts.POST("/enter_site", controllers.SetAnonymousToken)
+	accounts.POST("/signUp", controllers.SignUp)
+	accounts.POST("/signIn", controllers.SignIn)
 }

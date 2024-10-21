@@ -6,6 +6,7 @@ type SignUpData struct {
 }
 
 type UserInfo struct {
+	UUID string `json:"uuid"`
 	PhoneNumber string `json:"phone_number"`
 	Password string `json:"password"`
 }
