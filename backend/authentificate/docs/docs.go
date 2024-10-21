@@ -15,7 +15,27 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/SignIn": {
+        "/enter_site": {
+            "post": {
+                "description": "Генерация и задание токена для каждого пользователя(случайный uuid)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Токен для пользователя",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/signIn": {
             "post": {
                 "description": "Вход в аккаунт и установка токенов",
                 "consumes": [
@@ -67,7 +87,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/SignUp": {
+        "/signUp": {
             "post": {
                 "description": "Регистрация аккаунта и установка токенов",
                 "consumes": [

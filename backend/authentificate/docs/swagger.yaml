@@ -24,7 +24,20 @@ info:
   title: Account service API
   version: "1.0"
 paths:
-  /SignIn:
+  /enter_site:
+    post:
+      consumes:
+      - application/json
+      description: Генерация и задание токена для каждого пользователя(случайный uuid)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Токен для пользователя
+      tags:
+      - Users
+  /signIn:
     post:
       consumes:
       - application/json
@@ -58,7 +71,7 @@ paths:
       summary: Вход в аккаунт
       tags:
       - Users
-  /SignUp:
+  /signUp:
     post:
       consumes:
       - application/json
