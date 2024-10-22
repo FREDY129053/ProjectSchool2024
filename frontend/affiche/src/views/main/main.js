@@ -3,23 +3,8 @@ import { Header } from '../../layouts/header';
 import { Navbar } from '../../layouts/navbar';
 import { Footer } from '../../layouts/footer';
 import { Content } from '../../layouts/content';
-import { EventPage } from '../../event-page';
 
-// import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <Content />
-//   },
-//   {
-//     path: "/event",
-//     element: <EventPage />
-//   },
-// ])
-
-function Main() {
+function Main({PageType}) {
 
   const vlruCategories = [
     "Авто",
@@ -53,8 +38,9 @@ function Main() {
       <Navbar
         items={afficheCategories}
       />
-      {/* <RouterProvider router={router} /> */}
-      <Content />
+      <Content
+        PageType={PageType}
+      />
       <Footer
         afficheCategories={afficheCategories}
         vlruCategories={vlruCategories}

@@ -1,12 +1,24 @@
 import React from 'react';
 import './event-card.css';
 import { likeEvent  } from '../../../constants/images';
+import { useNavigate } from "react-router-dom";
 
 function EventCard({ eventTitle, eventImg, eventDatetime, eventLocation, eventPrice }) {
     const freeEvent = (eventPrice == 0);
+    let navigate = useNavigate();
 
+    const routeChange = () => { 
+        let path = `/event/` + eventTitle; 
+        navigate(path);
+    }
+
+    /*
+        Нужно будет придумать какой-то айди события или что-то в этом роде.
+        Чтобы все работало поставил eventTitle, но это надо будет менять
+    */
+    
     return (
-        <div className='EventCard'>
+        <div className='EventCard' onClick={routeChange}>
             <img
                 src={eventImg}
                 alt={""}

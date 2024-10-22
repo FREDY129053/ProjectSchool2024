@@ -1,0 +1,19 @@
+.FavoriteEvents {
+    display: flex;
+    flex-direction: column;
+}
+
+.favorite-events-block {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    margin: 0;
+}
+
+.favorite-events-header {
+    font-weight: 700;
+    font-size: 32px;
+    padding: 30px 0 30px 0;
+}
