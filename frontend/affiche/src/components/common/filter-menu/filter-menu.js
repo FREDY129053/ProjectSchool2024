@@ -1,19 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './filter-menu.css';
 import crossIcon from '../../../assets/icons/cross.svg';
+import arrowDownIcon from '../../../assets/icons/arrow-down.svg';
 
 const FilterMenu = ({ title, filters, style, buttonStyle, filterStyle, addFilter, removeFilter }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [activeFilters, setActiveFilters] = useState([]);
+    const [rotateAngle, setRotateAngle] = useState(0);
+    const menuListRef = useRef(null);
     const menuRef = useRef(null);
 
-    const handleToggle = () => {
+    const handleToggle = (event) => {
+        event.stopPropagation();
         setIsOpen(!isOpen);
+        setRotateAngle(prevAngle => prevAngle + 180);
     };
 
     const handleClickOutside = (event) => {
-        if (menuRef.current && !menuRef.current.contains(event.target)) {
+        if (menuListRef.current && !menuListRef.current.contains(event.target) && !menuRef.current.contains(event.target)) {
             setIsOpen(false);
+            setRotateAngle(prevAngle => prevAngle + 180);
         }
     };
 
@@ -37,23 +43,32 @@ const FilterMenu = ({ title, filters, style, buttonStyle, filterStyle, addFilter
     return (
         <div
             style={style}
-            ref={menuRef}
             className='FilterMenu'
         >
             <button
-                className='FilterMenuButton'
+                className='FilterMenuButton MenuStyledBox'
                 onClick={handleToggle}
                 style={buttonStyle}
+                ref={menuRef}
             >
                 {title}
+                <img
+                    src={arrowDownIcon}
+                    alt={''}
+                    className='ArrowIcon'
+                    style={{ transform: `rotate(${rotateAngle}deg)` }}
+                />
             </button>
             {isOpen && (
-                <div className='FilterList FadeInOut'>
+                <div
+                    className={`FilterList MenuStyledBox`}
+                    ref={menuListRef}
+                >
                     {filters.map((filter, index) => (
                         <div
                             key={index}
                             style={filterStyle}
-                            className={`Filter ${activeFilters.includes(index) ? 'Active' : ''}`}
+                            className={`Filter MenuStyledBox ${activeFilters.includes(index) ? 'Active' : ''}`}
                             onClick={() => handleFilterClick(index)}
                         >
                             {filter}

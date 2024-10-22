@@ -1,47 +1,49 @@
 .FilterMenu {
     font-size: 18px;
+    line-height: 40px;
 }
 
 .FilterList {
     margin-top: 10px;
     max-height: 500px;
-    /* min-height: 200px; */
     overflow-y: auto;
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
     display: flex;
     flex-direction: column;
     gap: 8px;
     cursor: pointer;
-    border: 1px solid #E88652;
-    border-radius: 10px;
     background-color: white;
+    opacity: 1;
 }
 
-.FadeInOut {
+.FilterList.FadeInOut {
     opacity: 1;
 }
 
 .FilterMenuButton {
-    display: block;
+    display: flex;
     width: 100%;
     text-align: center;
-    padding: 10px;
+    padding: 10px 20px;
     cursor: pointer;
+    width: auto;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .Filter {
-    line-height: 22px;
+    position: relative;
     padding-top: 10px;
     padding-bottom: 10px;
-    border: 1px solid #E88652;
-    border-radius: 10px;
     margin-left: 8px;
     margin-right: 8px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px;
+    text-align: center;
+    line-height: 22px;
 }
 
 .Filter.Active {
@@ -55,4 +57,22 @@
 
 .Filter:last-child {
     margin-bottom: 8px;
+}
+
+.FilterIcon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+}
+
+.MenuStyledBox {
+    border: 1px solid #E88652;
+    border-radius: 10px;
+}
+
+.ArrowIcon {
+    transition: transform 0.3s ease-in-out;
 }
