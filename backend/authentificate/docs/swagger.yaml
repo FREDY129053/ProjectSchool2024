@@ -21,9 +21,22 @@ host: localhost:8081
 info:
   contact: {}
   description: Account API on Go documentation
-  title: Account service API
+  title: Account Service API
   version: "1.0"
 paths:
+  /all_dates:
+    get:
+      consumes:
+      - application/json
+      description: Получение всех дат из БД
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Получение дат
+      tags:
+      - Dates
   /enter_site:
     post:
       consumes:
@@ -37,6 +50,23 @@ paths:
       summary: Токен для пользователя
       tags:
       - Users
+  /set_min_day/{minDay}:
+    put:
+      consumes:
+      - application/json
+      description: Указатние какая дата в БД будет минимальной. Нужно для тестов
+      parameters:
+      - description: Day
+        in: path
+        name: minDay
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Указание минмального дня в базе данных
+      tags:
+      - Dates
   /signIn:
     post:
       consumes:

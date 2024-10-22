@@ -15,6 +15,26 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/all_dates": {
+            "get": {
+                "description": "Получение всех дат из БД",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Dates"
+                ],
+                "summary": "Получение дат",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/enter_site": {
             "post": {
                 "description": "Генерация и задание токена для каждого пользователя(случайный uuid)",
@@ -33,6 +53,31 @@ const docTemplate = `{
                         "description": "OK"
                     }
                 }
+            }
+        },
+        "/set_min_day/{minDay}": {
+            "put": {
+                "description": "Указатние какая дата в БД будет минимальной. Нужно для тестов",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Dates"
+                ],
+                "summary": "Указание минмального дня в базе данных",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Day",
+                        "name": "minDay",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
             }
         },
         "/signIn": {
@@ -171,7 +216,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8081",
 	BasePath:         "/api/Accounts",
 	Schemes:          []string{},
-	Title:            "Account service API",
+	Title:            "Account Service API",
 	Description:      "Account API on Go documentation",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

@@ -10,7 +10,7 @@ import (
 	"github.com/swaggo/files"
 )
 
-// @title Account service API
+// @title Account Service API
 // @version 1.0
 // @description Account API on Go documentation
 
@@ -35,6 +35,8 @@ func main() {
 	accounts := router.Group("/api/Accounts")
 
 	accounts.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	accounts.PUT("/set_min_day/:minDay", controllers.SetMinDate)
+	accounts.GET("/all_dates", controllers.GetDates)
 	accounts.POST("/enter_site", controllers.SetAnonymousToken)
 	accounts.POST("/signUp", controllers.SignUp)
 	accounts.POST("/signIn", controllers.SignIn)
