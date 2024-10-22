@@ -10,5 +10,10 @@ export const categoryIcons = [
     "/assets/icons/category-icons/icon-sport.svg",                      // "Спорт",
     "/assets/icons/category-icons/icon-city.svg",                       // "В городе",
     "/assets/icons/category-icons/icon-museum.svg",                     // "Музеи и галлереи",
-    "/assets/icons/category-icons/icon-arrowdown.svg",                  // "Ещё"
+    "/assets/icons/category-icons/icon-cinema.svg",                     // "Кино"
+    "/assets/icons/category-icons/icon-tour.svg",
+    "/assets/icons/category-icons/icon-party.svg",
+    "/assets/icons/category-icons/icon-impression.svg",
+    "/assets/icons/category-icons/icon-masterclass.svg",
+    "/assets/icons/category-icons/icon-learning.svg"
 ]

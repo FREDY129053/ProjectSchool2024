@@ -3,6 +3,7 @@ import { Header } from '../../layouts/header';
 import { Navbar } from '../../layouts/navbar';
 import { Footer } from '../../layouts/footer';
 import { Content } from '../../layouts/content';
+import { categoryIcons } from '../../constants/images';
 
 function Main({PageType}) {
 
@@ -31,7 +32,7 @@ function Main({PageType}) {
     "Мастер-классы",
     "Обучение",
   ]
-
+  
   return (
     <div className="Main">
       <Header/>
