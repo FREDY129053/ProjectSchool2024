@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/reset.css';
 import './styles/index.css';
-import App from './app';
-import EventPage from './event-page';
-
+import App from './App';
 import reportWebVitals from './report-web-vitals';
 
 

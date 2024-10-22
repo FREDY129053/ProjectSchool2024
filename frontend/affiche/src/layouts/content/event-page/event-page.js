@@ -5,8 +5,8 @@
 */
 
 import React from "react";
-import './styles/event-page.css';
-import {BigButton} from './components/common/big-button';
+import './event-page.css';
+import {BigButton} from '../../../components/common/big-button';
 
 function EventPage() {
     return (
