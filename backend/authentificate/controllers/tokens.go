@@ -4,7 +4,10 @@ import (
 	"account_service/database"
 	"account_service/helpers"
 	"account_service/models"
+	"log"
+	"math"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -16,6 +19,73 @@ var (
 	jwtKey = []byte("9e419115-a86a-4ebb-b619-2334d5bfe89e")
 )
 
+
+// SetMinDate godoc
+// StMinDate Указание минимального дня в базе данных
+// @Summary Указание минмального дня в базе данных
+// @Description Указатние какая дата в БД будет минимальной. Нужно для тестов
+// @Tags Dates
+// @Accept json
+// @Produce json
+// @Param minDay path string true "Day"
+// @Router /set_min_day/{minDay} [put]
+func SetMinDate(c *gin.Context) {
+	dateDay := c.Param("minDay")
+	currDay, err := strconv.Atoi(dateDay)
+	if err != nil {
+		c.JSON(400, gin.H{"message": "parameter minDay should be a number"})
+		c.Abort()
+		return
+	}
+
+	var dbDate int
+	minDBDate := databaseConn.QueryRow("select extract(day from min(date)) from dates")
+	if err := minDBDate.Scan(&dbDate); err != nil {
+		log.Fatal(err.Error())
+	}
+
+	diffDate := math.Abs(float64(currDay - dbDate))
+
+	query := `
+        UPDATE dates
+        SET date = date + ($1 || ' days')::INTERVAL;
+	`
+
+	_, err = databaseConn.Exec(query, diffDate)
+	if err!= nil {
+    log.Fatal(err.Error())
+  }
+}
+
+
+// GetDates godoc
+// GetDates Получение дат
+// @Summary Получение дат
+// @Description Получение всех дат из БД
+// @Tags Dates
+// @Accept json
+// @Produce json
+// @Success 200
+// @Router /all_dates [get]
+func GetDates(c *gin.Context) {
+	rows, err := databaseConn.Query("select date from dates")
+  if err!= nil {
+    log.Fatal(err.Error())
+  }
+  defer rows.Close()
+
+  var dates []string
+  for rows.Next() {
+    var date string
+    err := rows.Scan(&date)
+    if err!= nil {
+      log.Fatal(err.Error())
+    }
+    dates = append(dates, date)
+  }
+
+  c.JSON(http.StatusOK, gin.H{"dates": dates})
+}
 
 // SetAnonymousToken godoc
 // SetAnonymousToken токен для пользователя
