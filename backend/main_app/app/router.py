@@ -1,5 +1,6 @@
 import aioredis
-from fastapi import FastAPI, Query, APIRouter
+from fastapi import Query, APIRouter, Request
+from fastapi.params import Cookie
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from fastapi_cache.decorator import cache
@@ -11,6 +12,23 @@ router = APIRouter(prefix='/events')
 @cache()
 async def get_cache():
     return 1
+
+
+@router.post("/")
+async def add_fav(request: Request,
+                  event_id: int,
+                  access_token: str = Query(None)):
+    anon_token = request.cookies.get('anonymous_token')
+    db.add_favorite(access_token, anon_token, event_id)
+
+
+@router.get("/favorites")
+@cache(expire=300)
+async def get_favs(request: Request,
+                   access_token: str = Query(None)):
+    anon_token = request.cookies.get('anonymous_token')
+    events = db.get_events_by_id(db.get_favorite_ids(access_token, anon_token))
+    return events
 
 
 @router.get("/")
