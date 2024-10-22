@@ -1,3 +1,6 @@
+import time
+from os.path import curdir
+
 import psycopg2
 
 from app.models import EventModel
@@ -16,16 +19,108 @@ def db_connect():
     return conn
 
 
-def get_events():
+def get_all_events():
     conn = db_connect()
     cursor = conn.cursor()
     cursor.execute('SELECT events.id, events.name, events.description, events.age, events.likes, '
-                   'events.dislikes, events.min_price, events.photo_url, location.id as location_id, '
-                   'location.name as location_name, location.address '
+                   'events.dislikes, events.min_price, events.photo_url, events.max_price, events.photo_url_big, '
+                   'location.id as location_id, location.name as location_name, location.address '
                    'FROM events JOIN location ON events.location_id=location.id')
     desc = cursor.description
     column_names = [col[0] for col in desc]
     data = [dict(zip(column_names, row)) for row in cursor.fetchall()]
+
+    data = add_type_tags_dates(data)
+
+    events = []
+    for ev in data:
+        event = EventModel.model_validate(ev)
+        events.append(event)
+
+    cursor.close()
+    conn.close()
+    return events
+
+
+def get_events_by_id(event_ids):
+    conn = db_connect()
+    cursor = conn.cursor()
+    query = ""
+    events = []
+
+    if len(event_ids) != 0:
+        for id in event_ids:
+            query += f"OR events.id={id} "
+        query = query[3:]
+
+        cursor.execute(f'SELECT events.id, events.name, events.description, events.age, events.likes, events.dislikes, '
+                       f'events.min_price, events.photo_url, events.max_price, events.photo_url_big, '
+                       f'location.id as location_id, location.name as location_name, location.address '
+                       f'FROM events JOIN location ON events.location_id=location.id '
+                       f'WHERE {query}')
+        desc = cursor.description
+        column_names = [col[0] for col in desc]
+        data = [dict(zip(column_names, row)) for row in cursor.fetchall()]
+
+        data = add_type_tags_dates(data)
+
+        for ev in data:
+            event = EventModel.model_validate(ev)
+            events.append(event)
+
+    cursor.close()
+    conn.close()
+    return events
+
+
+def get_filtered_ids(ages=[], themes=[], tags=[], dates=[], type=[], locations=[]):
+    filters1 = {"theme": themes, "tag": tags, "date": dates}
+    filters2 = {"type_id": type, "age": ages, "location_id": locations}
+    ids = set()
+
+    conn = db_connect()
+    cursor = conn.cursor()
+
+    for filter in filters1:
+        if filters1[filter] is not None:
+            data = set()
+            for value in filters1[filter]:
+                cursor.execute(f"SELECT event_and_{filter}s.event_id FROM event_and_{filter}s "
+                               f"WHERE event_and_{filter}s.{filter}_id={value}")
+
+                for id in cursor.fetchall():
+                    data.add(id[0])
+
+            ids = update_ids(filters1[filter], ids, data)
+
+    for filter in filters2:
+        if filters2[filter] is not None:
+            data = set()
+            for value in filters2[filter]:
+                cursor.execute(f"SELECT events.id FROM events "
+                               f"WHERE events.{filter}={value}")
+
+                for id in cursor.fetchall():
+                    data.add(id[0])
+
+            ids = update_ids(filters2[filter], ids, data)
+
+    return list(ids)
+
+
+def update_ids(filter, ids, data):
+    if len(filter) != 0:
+        if len(ids) != 0:
+            ids = set(ids & data)
+        else:
+            ids = data
+
+    return ids
+
+
+def add_type_tags_dates(data):
+    conn = db_connect()
+    cursor = conn.cursor()
 
     for event in data:
         cursor.execute(f'SELECT type.id as type_id, type.name as type_name '
@@ -55,10 +150,4 @@ def get_events():
 
     cursor.close()
     conn.close()
-
-    events = []
-    for ev in data:
-        event = EventModel.model_validate(ev)
-        events.append(event)
-
-    return events
+    return data

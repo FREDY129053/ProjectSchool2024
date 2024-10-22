@@ -40,6 +40,16 @@ services:
     ports:
       - "8081:8081"
 
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=my-password
+      - REDIS_PORT=6379
+      - REDIS_DATABASES=16
+
   # Пример запуска зависимого контейнера
   # account: - название сервиса
   #   build: ./account_micriservice - из какой папки брать Dockerfile(его писать в папке с проектом)
