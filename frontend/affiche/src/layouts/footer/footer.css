@@ -37,6 +37,10 @@
     margin: 30px 0;
 }
 
+.Footer .Title {
+    text-align: left;
+}
+
 .Items {
     font-size: 12px;
     
