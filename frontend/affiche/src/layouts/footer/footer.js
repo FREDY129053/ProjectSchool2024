@@ -1,8 +1,22 @@
 import React from 'react';
 import './footer.css';
+import { BigButton } from '../../components/common/big-button';
 
 
-function Footer({ afficheCategories, vlruCategories}) {
+function Footer({ afficheCategories, vlruCategories }) {
+
+    const helpButtonStyle = {
+        color: 'white',
+        backgroundColor: '#4a9ae8',
+        hoverBackgroundColor: '#66a7e9',
+        fontSize: '24px',
+        lineHeight: '24px',
+        borderRadius: '10px',
+        padding: '8px',
+        width: '210px',
+    };
+
+
     return (
         <div className='Footer'>
             <div className='Col1'>
@@ -36,7 +50,7 @@ function Footer({ afficheCategories, vlruCategories}) {
                         src={'../../assets/icons/media-icons/vk.svg'}
                         alt={'vk'}
                     />
-                    <img 
+                    <img
                         src={'../../assets/icons/media-icons/tg.svg'}
                         alt={'tg'}
                     />
@@ -48,8 +62,16 @@ function Footer({ afficheCategories, vlruCategories}) {
                 </div>
                 <div className='Help'>
                     <div className='Row Buttons'>
-                        <button className='HelpButton'>Вернуть билеты</button>
-                        <button className='HelpButton'>Найти билеты</button>
+                        <div className='MarginRight15'>
+                            <BigButton
+                                style={helpButtonStyle}
+                                text={'Вернуть билеты'}
+                            />
+                        </div>
+                        <BigButton
+                            style={helpButtonStyle}
+                            text={'Найти билеты'}
+                        />
                     </div>
                     <div className='Row Items'>
                         <div>

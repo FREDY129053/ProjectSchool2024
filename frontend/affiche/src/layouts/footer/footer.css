@@ -69,21 +69,7 @@
     margin-right: 12px; 
 }
 
-/* вот это надо вынести в ui kit думаю */
-.HelpButton {
-    color: white;
-    background-color: #4a9ae8;
-    font-size: 24px;
-    line-height: 24px;
-    border-radius: 10px;
-    padding: 8px;
-    width: 210px;
-
-    /* нажатая кнопка как я понял */
-    /* background-color: #9DCBF9;  */
-}
-
-.Buttons .HelpButton:not(:last-child) {
+.MarginRight15 {
     margin-right: 15px;
 }
 
