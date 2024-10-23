@@ -16,8 +16,8 @@ const (
 )
 
 var (
-	accessTokenTime = 15 * time.Minute
-	refreshTokenTime = 24 * time.Hour
+	accessTokenTime = 30 * time.Minute
+	refreshTokenTime = 30 * 24 * time.Hour
 )
 
 // Template Method - паттерн

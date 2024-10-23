@@ -1,5 +1,7 @@
 import aioredis
 from fastapi import Query, APIRouter, Request
+from typing import List, Optional
+from datetime import datetime, date
 from fastapi.params import Cookie
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
@@ -47,13 +49,45 @@ async def event_by_id(id: int):
 
 @router.get("/filtered")
 @cache(expire=300)
-async def filtered(ages: list[int] = Query(None),
-                      themes: list[int] = Query(None),
-                      tags: list[int] = Query(None),
-                      dates: list[int] = Query(None),
-                      type: list[int] = Query(None),
-                      locations: list[int] = Query(None)):
-    filtered = db.get_events_by_id(db.get_filtered_ids(ages, themes, tags, dates, type, locations))
+async def filtered(theme_id: int,
+                   start_date: Optional[date] = None,
+                   end_date: Optional[date] = None,
+                   tags: list[int] = Query(None),
+                   age: list[int] = Query(None),
+                   ):
+    query = f"""
+    SELECT DISTINCT e.id
+    FROM events e
+    JOIN event_and_themes et ON e.id = et.event_id
+    JOIN event_and_dates ed ON e.id = ed.event_id
+    JOIN dates d ON ed.date_id = d.id
+    WHERE et.theme_id = %s
+    """
+    params = [theme_id]
+
+    if start_date and end_date:
+        query += " AND DATE(d.date) BETWEEN %s AND %s"
+        params.append(start_date)
+        params.append(end_date)
+    elif start_date:
+        query += " AND DATE(d.date) = %s"
+        params.append(start_date)
+
+    if tags:
+        query += """
+        AND EXISTS(
+            SELECT 1 FROM event_and_tags etg
+            WHERE etg.event_id = e.id
+            AND etg.tag_id = ANY(%s)
+        )
+        """
+        params.append(tags)
+
+    if age:
+        query += " AND e.age = ANY(%s)"
+        params.append(age)
+
+    filtered = db.get_events_by_id(db.get_filtered_ids(query, params))
     return filtered
 
 

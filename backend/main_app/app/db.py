@@ -75,39 +75,15 @@ def get_events_by_id(event_ids):
     return events
 
 
-def get_filtered_ids(ages=[], themes=[], tags=[], dates=[], type=[], locations=[]):
-    filters1 = {"theme": themes, "tag": tags, "date": dates}
-    filters2 = {"type_id": type, "age": ages, "location_id": locations}
-    ids = set()
-
+def get_filtered_ids(query, params):
     conn = db_connect()
     cursor = conn.cursor()
+    cursor.execute(query, params)
+    events = cursor.fetchall()
+    cursor.close()
+    conn.close()
 
-    for filter in filters1:
-        if filters1[filter] is not None:
-            data = set()
-            for value in filters1[filter]:
-                cursor.execute(f"SELECT event_and_{filter}s.event_id FROM event_and_{filter}s "
-                               f"WHERE event_and_{filter}s.{filter}_id={value}")
-
-                for id in cursor.fetchall():
-                    data.add(id[0])
-
-            ids = update_ids(filters1[filter], ids, data)
-
-    for filter in filters2:
-        if filters2[filter] is not None:
-            data = set()
-            for value in filters2[filter]:
-                cursor.execute(f"SELECT events.id FROM events "
-                               f"WHERE events.{filter}={value}")
-
-                for id in cursor.fetchall():
-                    data.add(id[0])
-
-            ids = update_ids(filters2[filter], ids, data)
-
-    return list(ids)
+    return [event[0] for event in events]
 
 
 def add_favorite(access_token, anon_token, event_id):
@@ -150,7 +126,7 @@ def favorites_query(access_token, anon_token):
     if access_token is not None:
         query = "user_uuid"
         number = jwt.decode(access_token, b64decode('thingsboardDefaultSigningKey'), algorithms=["HS256"],
-                            options={'verify_signature': False})['phone']
+                            options={'verify_signature': False})['phone_number']
         uuid = ""
 
         conn = db_connect()
