@@ -47,6 +47,14 @@ async def event_by_id(id: int):
     return event
 
 
+@router.get("/theme={theme}")
+@cache(expire=300)
+async def tags_by_filter(theme_id: int):
+    tags = db.get_tags_by_theme(theme_id)
+    return tags
+
+
+
 @router.get("/filtered")
 @cache(expire=300)
 async def filtered(theme_id: int,
@@ -89,6 +97,14 @@ async def filtered(theme_id: int,
 
     filtered = db.get_events_by_id(db.get_filtered_ids(query, params))
     return filtered
+
+
+@router.delete("/favorites")
+async def remove_fav(request: Request,
+                     event_id: int,
+                     access_token: str = Query(None)):
+    anon_token = request.cookies.get('anonymous_token')
+    db.remove_favorite(access_token, anon_token, event_id)
 
 
 @router.on_event("startup")
