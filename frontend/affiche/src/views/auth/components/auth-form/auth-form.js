@@ -26,15 +26,16 @@ function AuthForm() {
         backgroundColor: 'white',
         color: 'black',
         fontSize: '16px',
-        width: 'calc(100% - 26px)',
+        width: 'calc(100% - 32px)',
         height: '40px',
+        alignSelf: 'center',
     };
     
     const submitButtonStyle = {
         backgroundColor: '#4a9ae8',
         color: 'white',
         fontSize: '22px',
-        width: 'calc(100% - 26px)',
+        width: 'calc(100% - 32px)',
         height: '40px',
         marginTop: '15px',
     };
@@ -135,7 +136,7 @@ function AuthForm() {
                                 SMS с кодом отправлено и должно прийти в течение 10 минут на указанный номер
                             </div>
                             <div className='PhoneNumber'>
-                                +791****56-27
+                                +7 91* *** 56-27
                             </div>
                         </div>
                     </div>
