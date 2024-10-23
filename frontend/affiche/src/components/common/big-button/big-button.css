@@ -1,0 +1,14 @@
+.big-button {
+    padding: 12px 16px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 24px;
+    width: 206px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}

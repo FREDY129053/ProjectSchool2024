@@ -1,0 +1,1 @@
+export {FavoriteEvents} from './favorite-events';

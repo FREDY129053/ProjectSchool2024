@@ -1,0 +1,65 @@
+.Calendar {
+    width: 270px;
+    height: 270px;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: #e88652;
+    background: #fff;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.Calendar-header-button {
+    width: 16px;
+    height: 16px;
+}
+
+.Calendar-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.Calendar-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.Calendar-tips {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 10px;
+    font-weight: 400;
+    gap: 8px;
+}
+
+.Calendar-tip {
+    width: 30px;
+    text-align: center;
+    color: #C1C1C1;
+}
+
+.Calendar-dates {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.Calendar-date {
+    min-width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.Calendar-date-active {background: #e88652; color: #fff; border-radius: 29px;}

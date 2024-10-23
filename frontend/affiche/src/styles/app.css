@@ -1,0 +1,13 @@
+.App {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  
+  padding: 0 125px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+}
+

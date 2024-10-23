@@ -1,0 +1,30 @@
+.UserControls {
+    display: flex;
+    gap: 20px
+}
+
+.searchbar::placeholder { color: #888888; }
+
+.favorite-btn-img:hover {content: url('../../../../../public/assets/like-button-hover.svg');}
+
+.favorite-btn, .favorite-btn-img {
+    width: 20px;
+    height: 18.35px;
+    margin-top: 3px;
+    color: #fff;
+}
+
+.login-btn, .login-btn-img {
+    width: 75px;
+    height: 31px;
+    padding: 0;
+
+    background: #4A9AE8;
+    color: #fff;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.login-btn:hover {background: #61AEF9;}
+.login-btn-text {color: #fff;}

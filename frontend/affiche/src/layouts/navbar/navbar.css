@@ -1,0 +1,12 @@
+.Navbar {
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 36px;
+}
+
+.NavbarCarousel {
+    position: relative;
+    left: -125px;
+}
