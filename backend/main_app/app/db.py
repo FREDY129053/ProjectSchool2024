@@ -1,7 +1,10 @@
 import time
+from base64 import b64decode
 from os.path import curdir
 
+import jwt
 import psycopg2
+from dns.e164 import query
 
 from app.models import EventModel
 
@@ -12,8 +15,7 @@ def db_connect():
         user="postgres",
         password="129053",
         host="postgres_db"
-        # host="localhost" - указывает, что сервис запущен внутри этого контейнера с Python. У нас БД вынесена в отдельный контейнер.
-        # Поэтому нужно указывать имя контейнера с БД как имя хоста, они в одной сети, так что подключится
+        # host="localhost"
     )
 
     return conn
@@ -106,6 +108,63 @@ def get_filtered_ids(ages=[], themes=[], tags=[], dates=[], type=[], locations=[
             ids = update_ids(filters2[filter], ids, data)
 
     return list(ids)
+
+
+def add_favorite(access_token, anon_token, event_id):
+    conn = db_connect()
+    cursor = conn.cursor()
+
+    query, uuid = favorites_query(access_token, anon_token)
+
+    if anon_token != uuid:
+        cursor.execute(f"INSERT INTO favorites (event_id, anonym_uuid, user_uuid) "
+                       f"VALUES ({event_id}, '{anon_token}', '{uuid}');")
+    else:
+        cursor.execute(f"INSERT INTO favorites (event_id, anonym_uuid) "
+                       f"VALUES ({event_id}, '{anon_token}');")
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+
+def get_favorite_ids(access_token, anon_token):
+    conn = db_connect()
+    cursor = conn.cursor()
+    data = []
+
+    query, uuid = favorites_query(access_token, anon_token)
+
+    cursor.execute(f"SELECT favorites.event_id FROM favorites "
+                   f"WHERE favorites.{query}='{uuid}'")
+    for id in cursor.fetchall():
+        data.append(id[0])
+
+    cursor.close()
+    conn.close()
+    return data
+
+
+def favorites_query(access_token, anon_token):
+    if access_token is not None:
+        query = "user_uuid"
+        number = jwt.decode(access_token, b64decode('thingsboardDefaultSigningKey'), algorithms=["HS256"],
+                            options={'verify_signature': False})['phone']
+        uuid = ""
+
+        conn = db_connect()
+        cursor = conn.cursor()
+
+        cursor.execute(f"SELECT users.uuid FROM users "
+                       f"WHERE users.phone_number='{number}'")
+        for id in cursor.fetchall():
+           uuid = id[0]
+    else:
+        query = "anonym_uuid"
+        uuid = anon_token
+
+    return query, uuid
 
 
 def update_ids(filter, ids, data):
