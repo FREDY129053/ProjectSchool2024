@@ -44,6 +44,37 @@ def get_all_events():
     return events
 
 
+def get_tags_by_theme(theme_id):
+    conn = db_connect()
+    cursor = conn.cursor()
+
+    cursor.execute(f"SELECT DISTINCT tags.id as tag_id, tags.name as tag_name "
+                   f"FROM tags JOIN event_and_tags AS table1 ON table1.tag_id=tags.id "
+                   f"JOIN event_and_themes ON event_and_themes.event_id=table1.event_id "
+                   f"WHERE event_and_themes.theme_id={theme_id}")
+
+    tags = [dict(zip(["tag_id", "tag_name"], row)) for row in cursor.fetchall()]
+
+    cursor.close()
+    conn.close()
+    return tags
+
+
+def remove_favorite(access_token, anon_token, event_id):
+    conn = db_connect()
+    cursor = conn.cursor()
+
+    query, uuid = favorites_query(access_token, anon_token)
+
+    cursor.execute(f"DELETE FROM favorites "
+                   f"WHERE favorites.event_id={event_id} AND favorites.{query}={uuid}")
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+
 def get_events_by_id(event_ids):
     conn = db_connect()
     cursor = conn.cursor()
