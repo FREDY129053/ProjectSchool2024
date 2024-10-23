@@ -3,8 +3,6 @@ import './auth.css';
 import { Header } from '../../layouts/header';
 import { AuthForm } from './components/auth-form';
 
-
-
 function Auth() {
 
     return (
@@ -13,7 +11,6 @@ function Auth() {
                 searchBar={false}
                 userControls={false}
             />
-
             <AuthForm />
         </div>
     );

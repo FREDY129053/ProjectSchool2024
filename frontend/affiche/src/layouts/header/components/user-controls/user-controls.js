@@ -22,7 +22,7 @@ function UserControls() {
                 <button className="link-body-emphasis favorite-btn">
                     <img src={likeInactive} className="favorite-btn-img" onClick={routeFavorite} />
                 </button>
-                </li>
+            </li>
             <li className="nav-item">
                 <button className="link-body-emphasis login-btn" onClick={routeAuth}>
                     <div className="login-btn-text">
