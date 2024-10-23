@@ -43,8 +43,8 @@ async def get_favs(request: Request,
 
 @router.get("/")
 @cache(expire=300)
-async def all_events():
-    events = db.get_all_events()
+async def all_events(page: int, size: int):
+    events = db.get_all_events(page, size)
     return events
 
 
@@ -61,6 +61,11 @@ async def tags_by_filter(theme_id: int):
     tags = db.get_tags_by_theme(theme_id)
     return tags
 
+
+@router.get("/themes")
+async def themes():
+    themes = db.get_themes()
+    return themes
 
 
 @router.get("/filtered")

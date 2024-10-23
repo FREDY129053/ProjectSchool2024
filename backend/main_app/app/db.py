@@ -21,13 +21,14 @@ def db_connect():
     return conn
 
 
-def get_all_events():
+def get_all_events(page, size):
+    offset = (page - 1) * size
     conn = db_connect()
     cursor = conn.cursor()
-    cursor.execute('SELECT events.id, events.name, events.description, events.age, events.likes, '
-                   'events.dislikes, events.min_price, events.photo_url, events.max_price, events.photo_url_big, '
-                   'location.id as location_id, location.name as location_name, location.address '
-                   'FROM events JOIN location ON events.location_id=location.id')
+    cursor.execute(f'SELECT events.id, events.name, events.description, events.age, events.likes, '
+                   f'events.dislikes, events.min_price, events.photo_url, events.max_price, events.photo_url_big, '
+                   f'location.id as location_id, location.name as location_name, location.address '
+                   f'FROM events JOIN location ON events.location_id=location.id OFFSET {offset} LIMIT {size}')
     desc = cursor.description
     column_names = [col[0] for col in desc]
     data = [dict(zip(column_names, row)) for row in cursor.fetchall()]
@@ -42,6 +43,19 @@ def get_all_events():
     cursor.close()
     conn.close()
     return events
+
+
+def get_themes():
+    conn = db_connect()
+    cursor = conn.cursor()
+
+    cursor.execute(f'SELECT themes.id as theme_id, themes.name as theme_name from themes')
+    themes = [dict(zip(["theme_id", "theme_name"], row)) for row in cursor.fetchall()]
+
+    cursor.close()
+    conn.close()
+    return themes
+
 
 
 def get_tags_by_theme(theme_id):
