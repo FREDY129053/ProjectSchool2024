@@ -67,7 +67,7 @@ def remove_favorite(access_token, anon_token, event_id):
     query, uuid = favorites_query(access_token, anon_token)
 
     cursor.execute(f"DELETE FROM favorites "
-                   f"WHERE favorites.event_id={event_id} AND favorites.{query}={uuid}")
+                   f"WHERE favorites.event_id={event_id} AND favorites.{query}='{uuid}'")
 
     conn.commit()
 
