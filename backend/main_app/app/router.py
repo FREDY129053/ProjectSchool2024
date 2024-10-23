@@ -16,6 +16,14 @@ async def get_cache():
     return 1
 
 
+@router.delete("/favorites")
+async def remove_fav(request: Request,
+                     event_id: int,
+                     access_token: str = Query(None)):
+    anon_token = request.cookies.get('anonymous_token')
+    db.remove_favorite(access_token, anon_token, event_id)
+
+
 @router.post("/")
 async def add_fav(request: Request,
                   event_id: int,
@@ -97,14 +105,6 @@ async def filtered(theme_id: int,
 
     filtered = db.get_events_by_id(db.get_filtered_ids(query, params))
     return filtered
-
-
-@router.delete("/favorites")
-async def remove_fav(request: Request,
-                     event_id: int,
-                     access_token: str = Query(None)):
-    anon_token = request.cookies.get('anonymous_token')
-    db.remove_favorite(access_token, anon_token, event_id)
 
 
 @router.on_event("startup")
