@@ -7,7 +7,7 @@ function ActiveFilter({title}) {
                 <div className="event-catalog-active-filter-title">
                     {title}
                 </div>
-            <img className="event-catalog-active-icon" src="/assets/icons/filter-icons/cross.svg"></img>
+            <img className="event-catalog-active-icon" src="/assets/icons/cross.svg"></img>
         </div>
     )
 }
